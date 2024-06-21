@@ -81,7 +81,7 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_REPORT_VER }}
             sudo docker stop ${{ env.IMAGE_NAME }} || true
             sudo docker rm ${{ env.IMAGE_NAME }} || true
-            sudo docker run -d --name ${{ env.IMAGE_NAME }} --network esthete-network -p 8040:8040 \
+            sudo docker run -d --name ${{ env.IMAGE_NAME }} --network esthete-network -p 8050:8050 \
                 -e DB_HOST='${{ secrets.DB_HOST }}' \
                 -e DB_PASSWORD='${{ secrets.DB_PASSWORD }}' \
                 -e DB_PORT='${{ secrets.DB_PORT }}' \
