@@ -78,18 +78,18 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           envs: GITHUB_SHA,NEXT_REPORT_VER
           script: |
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_REPORT_VER }}
             sudo docker stop ${{ env.IMAGE_NAME }} || true
             sudo docker rm ${{ env.IMAGE_NAME }} || true
-            sudo docker run -d --name ${{ env.IMAGE_NAME }} --network esthete-network -p 8050:8050 \
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_REPORT_VER }}
+            
+            sudo docker run -d --name ${{ env.IMAGE_NAME }} \
+                -p 8050:8050 \
+                --network esthete-network \
                 -e DB_HOST='${{ secrets.DB_HOST }}' \
                 -e DB_PASSWORD='${{ secrets.DB_PASSWORD }}' \
                 -e DB_PORT='${{ secrets.DB_PORT }}' \
                 -e DB_USERNAME='${{ secrets.DB_USERNAME }}' \
                 -e INITIAL_DB='${{ secrets.INITIAL_DB }}' \
-
-                -e EUREKA_HOST='${{ secrets.EUREKA_HOST }}' \
-                -e INSTANCE_HOST='${{ secrets.HOST_TEST_DNS }}' \
                 ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_REPORT_VER }}
             sleep 15
             sudo docker image prune -af || true
