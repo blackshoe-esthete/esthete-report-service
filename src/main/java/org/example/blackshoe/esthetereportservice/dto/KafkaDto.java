@@ -38,12 +38,20 @@ public class KafkaDto {
     }
 
     @Data
-    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class UserRemove {
-        private String userId;
+    public static class DeletePhoto {
+        private String photoId;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public class DeleteComment {
+        private String commentId;
     }
 }

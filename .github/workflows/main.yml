@@ -92,6 +92,10 @@ jobs:
                 -e INITIAL_DB='${{ secrets.INITIAL_DB }}' \
                 -e ADMIN_JWT_EXPIRATION='${{ secrets.ADMIN_JWT_EXPIRATION }}' \
                 -e ADMIN_JWT_SECRET='${{ secrets.ADMIN_JWT_SECRET }}' \
+                -e KAFKA_HOST='${{ secrets.KAFKA_HOST }}' \
+                -e KAFKA_PORT='${{ secrets.KAFKA_PORT }}' \
+                -e EUREKA_HOST='${{ secrets.EUREKA_HOST }}' \
+                -e INSTANCE_HOST='${{ secrets.HOST_TEST_DNS }}' \
                 ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_REPORT_VER }}
             sleep 15
             sudo docker image prune -af || true
