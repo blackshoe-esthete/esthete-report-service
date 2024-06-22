@@ -1,9 +1,11 @@
+SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS reports;
 DROP TABLE IF EXISTS photos;
 DROP TABLE IF EXISTS comments;
 DROP TABLE IF EXISTS admins;
--- test 
+DROP TABLE IF EXISTS reports;
+SET FOREIGN_KEY_CHECKS = 1;
+-- test
 CREATE TABLE IF NOT EXISTS users (
                                      user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      user_uuid BINARY(16) NOT NULL,
