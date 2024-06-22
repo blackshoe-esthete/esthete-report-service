@@ -9,4 +9,6 @@ public interface PhotoService {
     Page<PhotoDto.ReadBasicInfoResponse> readPhotos(int page, int size);
 
     PhotoDto.GetDetailInfoResponse getDetailPhoto(String photoId);
+
+    void rejectPhotoReport(String photoId);
 }

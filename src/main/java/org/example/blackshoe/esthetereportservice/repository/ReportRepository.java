@@ -2,10 +2,12 @@ package org.example.blackshoe.esthetereportservice.repository;
 
 import org.example.blackshoe.esthetereportservice.dto.CommentDto;
 import org.example.blackshoe.esthetereportservice.dto.PhotoDto;
+import org.example.blackshoe.esthetereportservice.entity.Comment;
 import org.example.blackshoe.esthetereportservice.entity.Report;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -59,4 +61,12 @@ public interface ReportRepository extends JpaRepository<Report, Long>{
             "WHERE r.comment.commentId = :commentUUID " +
             "ORDER BY r.reportedAt ASC")
     CommentDto.GetDetailInfo getCommentDetailByCommentId(UUID commentUUID);
+
+    @Modifying
+    @Query("DELETE FROM Report r WHERE r.photo.photoId = :photoUUID")
+    void deleteByPhotoId(UUID photoUUID);
+
+    @Modifying
+    @Query("DELETE FROM Report r WHERE r.comment.commentId = :commentUUID")
+    void deleteByCommentId(UUID commentUUID);
 }

@@ -1,10 +1,12 @@
 package org.example.blackshoe.esthetereportservice.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import kong.unirest.HttpStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Response;
 import org.example.blackshoe.esthetereportservice.dto.PhotoDto;
+import org.example.blackshoe.esthetereportservice.dto.ResponseDto;
 import org.example.blackshoe.esthetereportservice.service.PhotoService;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -41,12 +43,19 @@ public class PhotoController {
     }
     @Operation(summary = "사진 삭제")
     @DeleteMapping("/{photoId}")
-    public void deleteComment() {
+    public void deletePhoto() {
         log.info("deleteComment");
     }
     @Operation(summary = "사진 삭제 요청 반려")
     @DeleteMapping("/{photoId}/reject")
-    public void rejectDeleteComment() {
+    public ResponseEntity<ResponseDto> rejectDeletePhoto(
+            @PathVariable String photoId
+    ) {
+
         log.info("rejectDeleteComment");
+
+        photoService.rejectPhotoReport(photoId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

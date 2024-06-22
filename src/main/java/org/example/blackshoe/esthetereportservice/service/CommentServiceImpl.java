@@ -3,11 +3,14 @@ package org.example.blackshoe.esthetereportservice.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.blackshoe.esthetereportservice.dto.CommentDto;
+import org.example.blackshoe.esthetereportservice.entity.Comment;
+import org.example.blackshoe.esthetereportservice.repository.CommentRepository;
 import org.example.blackshoe.esthetereportservice.repository.ReportRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -16,7 +19,7 @@ import java.util.UUID;
 public class CommentServiceImpl implements CommentService{
 
     private final ReportRepository reportRepository;
-
+    private final CommentRepository commentRepository;
     @Override
     public Page<CommentDto.ReadBasicInfo> readComments(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -34,4 +37,20 @@ public class CommentServiceImpl implements CommentService{
         return reportRepository.getCommentDetailByCommentId(commentUUID);
     }
 
+    @Transactional
+    @Override
+    public void rejectCommentReport(String commentId) {
+        UUID commentUUID = UUID.fromString(commentId);
+        reportRepository.deleteByCommentId(commentUUID);
+        commentRepository.deleteByCommentId(commentUUID);
+    }
+
+    @Transactional
+    @Override
+    public void deleteComment(String commentId) {
+        UUID commentUUID = UUID.fromString(commentId);
+        reportRepository.deleteByCommentId(commentUUID);
+        commentRepository.deleteByCommentId(commentUUID);
+        //@TODO : kafka event publish
+    }
 }

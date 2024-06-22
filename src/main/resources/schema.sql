@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS photos (
     photo_uuid BINARY(16) NOT NULL,
     photo_cloudfront_url VARCHAR(500) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS comments (
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS comments (
     report_id BIGINT NOT NULL,
     content VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (report_id) REFERENCES reports(report_id)
+    FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE
     );
 
 CREATE TABLE IF NOT EXISTS admins (

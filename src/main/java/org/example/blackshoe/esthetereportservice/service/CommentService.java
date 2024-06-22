@@ -7,4 +7,7 @@ public interface CommentService {
     Page<CommentDto.ReadBasicInfo> readComments(int page, int size);
 
     CommentDto.GetDetailInfo getDetailComment(String commentId);
+    void rejectCommentReport(String commentId);
+
+    void deleteComment(String commentId);
 }
