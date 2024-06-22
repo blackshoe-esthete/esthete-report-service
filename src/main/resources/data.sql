@@ -7,10 +7,12 @@ INSERT INTO users (user_id, user_uuid, nickname, created_at, profile_cloudfront_
  (2, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), 'test_user2', NOW(), '프로필 url'),
  (3, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), 'test_user3', NOW(), '프로필 url'),
  (4, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), 'test_user4', NOW(), '프로필 url'),
- (5, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), 'test_user5', NOW(), '프로필 url')
+ (5, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), 'test_user5', NOW(), '프로필 url'),
+ (6, UNHEX(REPLACE('5d5be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), 'test_user6', NOW(), '프로필 url')
 ON DUPLICATE KEY UPDATE user_uuid = user_uuid;
 
-INSERT INTO reports (report_id, reporter_uuid, writer_uuid, definition, type, created_at)
+
+INSERT INTO reports (report_id, reporter_uuid, writer_uuid, description, type, reported_at)
 VALUES
     (1, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')), UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), 'Inappropriate content', '광고성 사진', NOW()),
     (2, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), 'Copyright violation', '명예훼손/저작권 침해', NOW()),

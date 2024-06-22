@@ -3,6 +3,8 @@ CREATE TABLE IF NOT EXISTS users (
                                      user_uuid BINARY(16) NOT NULL,
     nickname VARCHAR(50) NOT NULL,
     profile_cloudfront_url VARCHAR(50) NOT NULL,
+    report_recieved_count BIGINT DEFAULT 0,
+    report_made_count BIGINT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -10,9 +12,9 @@ CREATE TABLE IF NOT EXISTS reports (
                                        report_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                        reporter_uuid BINARY(16) NOT NULL,
     writer_uuid BINARY(16) NOT NULL,
-    definition VARCHAR(50) NOT NULL,
+    description VARCHAR(100) NOT NULL,
     type VARCHAR(50) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    reported_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
 CREATE TABLE IF NOT EXISTS photos (

@@ -8,26 +8,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.blackshoe.esthetereportservice.common.BaseEntity;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Table(name = "reports")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Report extends BaseEntity {
+public class Report{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "report_id")
     private Long id;
 
-    @Column(name = "reporter_uuid", columnDefinition = "BINARY(16)", unique = true, nullable = false)
+    @Column(name = "reporter_uuid", columnDefinition = "BINARY(16)", nullable = false)
     private UUID reporterId;
 
-    @Column(name = "writer_uuid", columnDefinition = "BINARY(16)", unique = true, nullable = false)
+    @Column(name = "writer_uuid", columnDefinition = "BINARY(16)", nullable = false)
     private UUID writerId;
 
-    @Column(name = "definition", nullable = false, length = 50)
-    private String definition;
+    @Column(name = "description", nullable = false, length = 100)
+    private String description;
 
     @Column(name = "type", nullable = false, length = 50)
     private String type;
@@ -38,11 +39,20 @@ public class Report extends BaseEntity {
     @OneToOne(mappedBy = "report", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Photo photo;
 
+    @Column(name = "reported_at", nullable = false)
+    private LocalDateTime reportedAt;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.reportedAt == null)
+            this.reportedAt = LocalDateTime.now();
+    }
+
     @Builder
-    public Report(UUID reporterId, UUID writerId, String definition, String type) {
+    public Report(UUID reporterId, UUID writerId, String description, String type) {
         this.reporterId = reporterId;
         this.writerId = writerId;
-        this.definition = definition;
+        this.description = description;
         this.type = type;
     }
     public void setComment(Comment comment) {

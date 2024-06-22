@@ -27,7 +27,21 @@ public class User extends BaseEntity {
 
     @Column(name = "profile_cloudfront_url", nullable = false, length = 50)
     private String profileCloudfrontUrl;
-    
+
+    @Column(name = "report_received_count", nullable = false, columnDefinition = "BIGINT default 0")
+    private Long reportReceivedCount;
+
+    @Column(name = "report_made_count", nullable = false, columnDefinition = "BIGINT default 0")
+    private Long reportMadeCount;
+
+    public void increaseReportReceivedCount() {
+        this.reportReceivedCount++;
+    }
+
+    public void increaseReportMadeCount() {
+        this.reportMadeCount++;
+    }
+
     public void setUserId(UUID userId) {
         this.userId = userId;
     }
