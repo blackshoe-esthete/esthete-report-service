@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS reports;
+DROP TABLE IF EXISTS photos;
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS admins;
+-- test 
 CREATE TABLE IF NOT EXISTS users (
                                      user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      user_uuid BINARY(16) NOT NULL,
