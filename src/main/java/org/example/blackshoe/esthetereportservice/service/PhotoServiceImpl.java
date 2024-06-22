@@ -8,6 +8,7 @@ import org.example.blackshoe.esthetereportservice.repository.ReportRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,10 +36,19 @@ public class PhotoServiceImpl implements PhotoService {
 
         return reportRepository.getPhotoDetailByPhotoId(photoUUID);
     }
-
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @Override
     public void rejectPhotoReport(String photoId) {
+        UUID photoUUID = UUID.fromString(photoId);
+        reportRepository.deleteByPhotoId(photoUUID);
+        photoRepository.deleteByPhotoId(photoUUID);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @Transactional
+    @Override
+    public void deletePhotoReport(String photoId) {
         UUID photoUUID = UUID.fromString(photoId);
         reportRepository.deleteByPhotoId(photoUUID);
         photoRepository.deleteByPhotoId(photoUUID);

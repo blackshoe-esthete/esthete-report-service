@@ -1,5 +1,6 @@
 package org.example.blackshoe.esthetereportservice.service;
 
+import jakarta.persistence.PrePersist;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.blackshoe.esthetereportservice.dto.CommentDto;
@@ -9,6 +10,7 @@ import org.example.blackshoe.esthetereportservice.repository.ReportRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +39,7 @@ public class CommentServiceImpl implements CommentService{
         return reportRepository.getCommentDetailByCommentId(commentUUID);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @Override
     public void rejectCommentReport(String commentId) {
@@ -44,7 +47,7 @@ public class CommentServiceImpl implements CommentService{
         reportRepository.deleteByCommentId(commentUUID);
         commentRepository.deleteByCommentId(commentUUID);
     }
-
+    @PreAuthorize("isAuthenticated()")
     @Transactional
     @Override
     public void deleteComment(String commentId) {
