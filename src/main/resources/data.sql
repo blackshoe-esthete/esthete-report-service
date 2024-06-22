@@ -36,4 +36,9 @@ VALUES
     (8,8, '입',UNHEX(REPLACE('02b52d52-b400-4bf1-8879-57f08a69cfd9', '-', '')), 'https://d1g6qszf7cmafu.cloudfront.net/exhibition/6422e443-fedd-4f94-ae26-6e4fa9b58860/exhibition-photos/b342c93a-02fb-4ef0-a12c-f2949501e6fd.jpg', NOW())
     ON DUPLICATE KEY UPDATE photo_id = photo_id;
 
+INSERT INTO admins (admin_id, admin_uuid, email, password, created_at, role) VALUES
+ (1, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')), 'test@admin.com', '$2a$10$hCdKEg9dbBkWoEIqWgG0DuOrxuuQEYHpXmxoA16dJK6WaDsdKpz7K', NOW(),
+ 'ADMIN')
+ON DUPLICATE KEY UPDATE admin_id = admin_id;
+
 SET FOREIGN_KEY_CHECKS = 1;

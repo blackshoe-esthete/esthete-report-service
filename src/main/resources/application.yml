@@ -39,3 +39,11 @@ logging:
       hibernate:
         SQL: DEBUG
         type: trace
+
+app:
+  jwt:
+    secret: ${ADMIN_JWT_SECRET}
+    expiration: ${ADMIN_JWT_EXPIRATION}
+#  host-url: ${HOST_URL}
+#  client1-url: ${CLIENT1_URL}
+#  client2-url: ${CLIENT2_URL}

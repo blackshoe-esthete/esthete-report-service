@@ -90,6 +90,8 @@ jobs:
                 -e DB_PORT='${{ secrets.DB_PORT }}' \
                 -e DB_USERNAME='${{ secrets.DB_USERNAME }}' \
                 -e INITIAL_DB='${{ secrets.INITIAL_DB }}' \
+                -e ADMIN_JWT_EXPIRATION='${{ secrets.ADMIN_JWT_EXPIRATION }}' \
+                -e ADMIN_JWT_SECRET='${{ secrets.ADMIN_JWT_SECRET }}' \
                 ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_REPORT_VER }}
             sleep 15
             sudo docker image prune -af || true

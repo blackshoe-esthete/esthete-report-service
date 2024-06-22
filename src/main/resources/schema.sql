@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS admins (
                                       admin_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                       admin_uuid BINARY(16) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL,
+    password VARCHAR(250) NOT NULL,
+    `role` VARCHAR(20) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
