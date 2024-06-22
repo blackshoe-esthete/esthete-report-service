@@ -3,6 +3,7 @@ package org.example.blackshoe.esthetereportservice.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.Response;
 import org.example.blackshoe.esthetereportservice.dto.PhotoDto;
 import org.example.blackshoe.esthetereportservice.service.PhotoService;
 import org.springframework.data.domain.Page;
@@ -29,8 +30,14 @@ public class PhotoController {
     }
     @Operation(summary = "사진 상세 조회")
     @GetMapping("/{photoId}")
-    public void getComments() {
-        log.info("getComments");
+    public ResponseEntity<PhotoDto.GetDetailInfoResponse> getComments(
+            @PathVariable String photoId
+    ) {
+        log.info("get detail photo");
+
+        PhotoDto.GetDetailInfoResponse response = photoService.getDetailPhoto(photoId);
+
+        return ResponseEntity.ok(response);
     }
     @Operation(summary = "사진 삭제")
     @DeleteMapping("/{photoId}")

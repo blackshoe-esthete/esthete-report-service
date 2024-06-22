@@ -40,12 +40,12 @@ public class PhotoDto {
     @NoArgsConstructor
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class ReadDetailInfoResponse {
+    public static class GetDetailInfoResponse {
         private String exhibitionTitle;
-        private String photoId;
+        private UUID photoId;
         private LocalDateTime reportedAt;
         private String description;
-        private String writerId;
+        private UUID writerId;
         private String nickname;
         private String profileCloudfrontUrl;
 
@@ -53,22 +53,22 @@ public class PhotoDto {
         private Long userReportReceivedCount;
 
         @Builder
-        public ReadDetailInfoResponse(
+        public GetDetailInfoResponse(
                 String exhibitionTitle,
-                String photoId,
+                UUID photoId,
                 LocalDateTime reportedAt,
                 String description,
-                String writerId,
+                UUID writerId,
                 String nickname,
                 String profileCloudfrontUrl,
                 Long photoReportReceivedCount,
                 Long userReportReceivedCount
         ) {
             this.exhibitionTitle = exhibitionTitle == null ? "" : exhibitionTitle;
-            this.photoId = photoId == null ? "" : photoId;
+            this.photoId = photoId;
             this.reportedAt = reportedAt;
             this.description = description == null ? "" : description;
-            this.writerId = writerId == null ? "" : writerId;
+            this.writerId = writerId;
             this.nickname = nickname == null ? "" : nickname;
             this.profileCloudfrontUrl = profileCloudfrontUrl == null ? "" : profileCloudfrontUrl;
 

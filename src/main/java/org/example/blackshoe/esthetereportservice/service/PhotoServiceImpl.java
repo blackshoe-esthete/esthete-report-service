@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @Slf4j @RequiredArgsConstructor
 public class PhotoServiceImpl implements PhotoService {
@@ -22,5 +24,13 @@ public class PhotoServiceImpl implements PhotoService {
         Page<PhotoDto.ReadBasicInfoResponse> photos = reportRepository.readPhotos(pageable);
 
         return photos;
+    }
+
+    @Override
+    public PhotoDto.GetDetailInfoResponse getDetailPhoto(String photoId) {
+
+        UUID photoUUID = UUID.fromString(photoId);
+
+        return reportRepository.getPhotoDetailByPhotoId(photoUUID);
     }
 }
