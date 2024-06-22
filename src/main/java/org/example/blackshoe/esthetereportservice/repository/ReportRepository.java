@@ -1,5 +1,6 @@
 package org.example.blackshoe.esthetereportservice.repository;
 
+import org.example.blackshoe.esthetereportservice.dto.CommentDto;
 import org.example.blackshoe.esthetereportservice.dto.PhotoDto;
 import org.example.blackshoe.esthetereportservice.entity.Report;
 import org.springframework.data.domain.Page;
@@ -35,7 +36,7 @@ public interface ReportRepository extends JpaRepository<Report, Long>{
         ) {
  */
     @Query("SELECT new org.example.blackshoe.esthetereportservice.dto.PhotoDto$GetDetailInfoResponse" +
-            "(r.photo.exhibitionTitle, r.photo.photoId, r.reportedAt, r.description, r.writerId, u.nickname, u.profileCloudfrontUrl, " +
+            "(r.photo.exhibitionTitle, r.photo.photoId, r.photo.createdAt, r.reportedAt, r.description, r.writerId, u.nickname, u.profileCloudfrontUrl, " +
             "(SELECT COUNT(pr) FROM Report pr WHERE pr.photo.photoId = :photoUUID), " +
             "u.reportReceivedCount" +
             ") " +
@@ -43,4 +44,19 @@ public interface ReportRepository extends JpaRepository<Report, Long>{
             "LEFT JOIN User u ON r.writerId = u.userId " +
             "WHERE r.photo.photoId = :photoUUID")
     PhotoDto.GetDetailInfoResponse getPhotoDetailByPhotoId(UUID photoUUID);
+
+    @Query("SELECT new org.example.blackshoe.esthetereportservice.dto.CommentDto$ReadBasicInfo" +
+            "(r.writerId, u.nickname, u.profileCloudfrontUrl, r.description) " +
+            "FROM Report r " +
+            "LEFT JOIN User u ON r.writerId = u.userId " +
+            "ORDER BY r.reportedAt ASC")
+    Page<CommentDto.ReadBasicInfo> readComments(Pageable pageable);
+
+    @Query("SELECT new org.example.blackshoe.esthetereportservice.dto.CommentDto$GetDetailInfo" +
+            "(r.comment.commentId, r.comment.createdAt, r.reportedAt, r.description, u.profileCloudfrontUrl, u.nickname, r.writerId, u.reportReceivedCount) " +
+            "FROM Report r " +
+            "LEFT JOIN User u ON r.writerId = u.userId " +
+            "WHERE r.comment.commentId = :commentUUID " +
+            "ORDER BY r.reportedAt ASC")
+    CommentDto.GetDetailInfo getCommentDetailByCommentId(UUID commentUUID);
 }

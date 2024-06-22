@@ -4,10 +4,11 @@ package org.example.blackshoe.esthetereportservice.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.example.blackshoe.esthetereportservice.dto.CommentDto;
+import org.example.blackshoe.esthetereportservice.service.CommentService;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RequestMapping("/comment")
@@ -15,15 +16,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CommentController {
 
+    private final CommentService commentService;
     @Operation(summary = "댓글 리스트 조회")
-    @GetMapping("/{commentId}")
-    public void getComment() {
-        log.info("getComment");
+    @GetMapping
+    public ResponseEntity<Page<CommentDto.ReadBasicInfo>> readComment(
+            int page,
+            int size
+    ) {
+        log.info("read comments");
+        Page<CommentDto.ReadBasicInfo> comments = commentService.readComments(page, size);
+        return ResponseEntity.ok(comments);
     }
     @Operation(summary = "댓글 상세 조회")
-    @GetMapping
-    public void getComments() {
+    @GetMapping("/{commentId}")
+    public ResponseEntity<CommentDto.GetDetailInfo> getComments(
+            @PathVariable String commentId
+    ) {
         log.info("getComments");
+        CommentDto.GetDetailInfo response = commentService.getDetailComment(commentId);
+        return ResponseEntity.ok(response);
     }
     @Operation(summary = "댓글 삭제")
     @DeleteMapping("/{commentId}")
