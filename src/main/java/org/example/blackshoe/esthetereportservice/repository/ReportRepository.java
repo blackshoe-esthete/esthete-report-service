@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -70,4 +71,12 @@ public interface ReportRepository extends JpaRepository<Report, Long>{
     @Modifying
     @Query("DELETE FROM Report r WHERE r.comment.commentId = :commentUUID")
     void deleteByCommentId(UUID commentUUID);
+
+
+    @Query("SELECT r FROM Report r WHERE r.writerId = :userId")
+    List<Report> findByWriterId(UUID userId);
+
+    @Modifying
+    @Query("DELETE FROM Report r WHERE r.writerId = :userId")
+    void deleteByWriterId(UUID userId);
 }
