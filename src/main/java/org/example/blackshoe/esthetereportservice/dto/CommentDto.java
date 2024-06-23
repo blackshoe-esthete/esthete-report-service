@@ -20,12 +20,14 @@ public class CommentDto {
         private String nickname;
         private String profileImgUrl;
         private String description;
+        private String commentContent;
         @Builder
-        public ReadBasicInfo(UUID writerId, String nickname, String profileImgUrl, String description) {
+        public ReadBasicInfo(UUID writerId, String nickname, String profileImgUrl, String description, String commentContent) {
             this.writerId = writerId;
             this.nickname = nickname == null ? "" : nickname;
             this.profileImgUrl = profileImgUrl == null ? "" : profileImgUrl;
             this.description = description == null ? "" : description;
+            this.commentContent = commentContent == null ? "" : commentContent;
         }
     }
 
@@ -44,6 +46,7 @@ public class CommentDto {
 
         private Long userReportReceivedCount;
 
+        private String commentContent;
         @Builder
         public GetDetailInfo(
                 UUID commentId,
@@ -54,7 +57,8 @@ public class CommentDto {
                 String nickname,
                 UUID writerId,
 
-                Long userReportReceivedCount
+                Long userReportReceivedCount,
+                String commentContent
         ) {
             this.commentId = commentId;
             this.createdAt = createdAt;
@@ -65,6 +69,7 @@ public class CommentDto {
             this.writerId = writerId;
 
             this.userReportReceivedCount = userReportReceivedCount;
+            this.commentContent = commentContent;
         }
     }
 }

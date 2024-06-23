@@ -24,7 +24,7 @@ VALUES
     ON DUPLICATE KEY UPDATE report_id = report_id;
 
 
-INSERT INTO photos (photo_id, report_id, exhibition_title, photo_uuid, photo_cloudfront_url, created_at)
+INSERT INTO photos (photo_id, report_id, exhibition_title, photo_uuid, photo_img_url, created_at)
 VALUES
     (1,1, '태양',UNHEX(REPLACE('e275b6d8-4cc2-4b38-9f89-426f7bf3f1ed', '-', '')), 'https://d1g6qszf7cmafu.cloudfront.net/exhibition/35519784-ce74-443b-8665-d1c00cafa6f5/exhibition-photos/7b75cde4-ba6b-405f-9a36-eafd2e7e163e.jpg', NOW()),
     (2,2, '구름',UNHEX(REPLACE('a9db8cfe-f866-4d3d-b377-5ecf689ad91f', '-', '')), 'https://d1g6qszf7cmafu.cloudfront.net/exhibition/31216ebf-27a5-4013-bedf-06642401f332/exhibition-photos/98e80855-83ac-4912-8119-373c797924a6.jpg', NOW()),

@@ -36,8 +36,6 @@ public class KafkaUserInfoConsumer{
         }
 
         log.info("User info : {}", userCreate);
-        acknowledgment.acknowledge();
-
 
         UUID userId = UUID.fromString(userCreate.getUserId());
 
@@ -48,6 +46,7 @@ public class KafkaUserInfoConsumer{
         user.setUserId(userId);
 
         userRepository.save(user);
+        acknowledgment.acknowledge();
     }
 
     @KafkaListener(topics = "user-set-profile")
@@ -64,7 +63,6 @@ public class KafkaUserInfoConsumer{
         }
 
         log.info("User info : {}", userProfileImgUrlDto);
-        acknowledgment.acknowledge();
 
         UUID userId = UUID.fromString(userProfileImgUrlDto.getUserId());
         final User user = userRepository.findByUserId(userId).orElseThrow(() -> new KafkaException(KafkaErrorResult.USER_NOT_FOUND));
@@ -72,7 +70,6 @@ public class KafkaUserInfoConsumer{
         user.updateProfileImgUrl(userProfileImgUrlDto.getProfileImgUrl());
 
         userRepository.save(user);
+        acknowledgment.acknowledge();
     }
-
-
 }

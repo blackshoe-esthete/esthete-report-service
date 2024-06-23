@@ -25,17 +25,17 @@ public class Photo extends BaseEntity {
     @Column(name = "exhibition_title", nullable = false, length = 50)
     private String exhibitionTitle;
 
-    @Column(name = "photo_cloudfront_url", nullable = false, length = 500)
-    private String photoCloudfrontUrl;
+    @Column(name = "photo_img_url", nullable = false, columnDefinition = "VARCHAR(250) default 'default'")
+    private String photoImgUrl;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "report_id", foreignKey = @ForeignKey(name = "photos_fk_report_id"))
     private Report report;
 
     @Builder
-    public Photo(String photoCloudfrontUrl,
+    public Photo(String photoImgUrl,
                  String exhibitionTitle) {
-        this.photoCloudfrontUrl = photoCloudfrontUrl;
+        this.photoImgUrl = photoImgUrl;
         this.exhibitionTitle = exhibitionTitle;
     }
 

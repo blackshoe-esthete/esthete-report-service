@@ -5,6 +5,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.blackshoe.esthetereportservice.dto.KafkaConsumerDto;
 import org.example.blackshoe.esthetereportservice.entity.Comment;
+import org.example.blackshoe.esthetereportservice.entity.Photo;
+import org.example.blackshoe.esthetereportservice.entity.Report;
+import org.example.blackshoe.esthetereportservice.repository.CommentRepository;
+import org.example.blackshoe.esthetereportservice.repository.PhotoRepository;
+import org.example.blackshoe.esthetereportservice.repository.ReportRepository;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
@@ -15,41 +20,9 @@ import java.util.UUID;
 @Service @Slf4j @RequiredArgsConstructor
 public class KafkaReportConsumer {
     private final ObjectMapper objectMapper;
-    //comment, 저장
-
-    /*
-        private final ObjectMapper objectMapper;
-    private final UserRepository userRepository;
-
-    @KafkaListener(topics = "user-create")
-    @Transactional
-    public void createUser(String payload, Acknowledgment acknowledgment) {
-        log.info("received payload='{}'", payload);
-        KafkaConsumerDto.UserCreate userCreate = null;
-
-        try {
-            // 역직렬화
-            userCreate = objectMapper.readValue(payload, KafkaConsumerDto.UserCreate.class);
-        } catch (Exception e) {
-            log.error("Error while converting json string to user object", e);
-        }
-
-        log.info("User info : {}", userCreate);
-        acknowledgment.acknowledge();
-
-
-        UUID userId = UUID.fromString(userCreate.getUserId());
-
-        User user = User.builder()
-                .nickname(userCreate.getNickname())
-                .build();
-
-        user.setUserId(userId);
-
-        userRepository.save(user);
-    }
-        comment
-     */
+    private final ReportRepository reportRepository;
+    private final CommentRepository commentRepository;
+    private final PhotoRepository photoRepository;
 
     @KafkaListener(topics = "comment-report")
     @Transactional
@@ -65,21 +38,73 @@ public class KafkaReportConsumer {
         }
 
         log.info("Comment info : {}", commentReport);
-        acknowledgment.acknowledge();
-        /*
-        private String reporterId;
-        private String writerId;
-        private String reportType;
-        private String reportDescription;
-        private String commentId;
-         */
 
         UUID reporterId = UUID.fromString(commentReport.getReporterId());
         UUID writerId = UUID.fromString(commentReport.getWriterId());
+
+        Report report = Report.builder()
+                .reporterId(reporterId)
+                .writerId(writerId)
+                .description(commentReport.getReportDescription())
+                .type(commentReport.getReportType())
+                .build();
+
+        reportRepository.save(report);
+
+        Comment comment = Comment.builder()
+                .content(commentReport.getCommentContent())
+                .build();
+
         UUID commentId = UUID.fromString(commentReport.getCommentId());
 
+        comment.setCommentId(commentId);
+        comment.updateReport(report);
 
+        commentRepository.save(comment);
+
+        acknowledgment.acknowledge();
     }
 
-    //photo, 저장
+    @KafkaListener(topics = "photo-report")
+    @Transactional
+    public void reportPhoto(String payload, Acknowledgment acknowledgment) {
+        log.info("received payload='{}'", payload);
+        KafkaConsumerDto.PhotoReport photoReport = null;
+
+        try {
+            // 역직렬화
+            photoReport = objectMapper.readValue(payload, KafkaConsumerDto.PhotoReport.class);
+        } catch (Exception e) {
+            log.error("Error while converting json string to photo object", e);
+
+        }
+
+        log.info("Photo info : {}", photoReport);
+
+        UUID reporterId = UUID.fromString(photoReport.getReporterId());
+        UUID writerId = UUID.fromString(photoReport.getWriterId());
+
+        Report report = Report.builder()
+                .reporterId(reporterId)
+                .writerId(writerId)
+                .description(photoReport.getReportDescription())
+                .type(photoReport.getReportType())
+                .build();
+
+        reportRepository.save(report);
+
+        UUID photoId = UUID.fromString(photoReport.getPhotoId());
+
+        Photo photo = Photo.builder()
+                .photoImgUrl(photoReport.getPhotoImgUrl())
+                .exhibitionTitle(photoReport.getExhibitionTitle())
+                .build();
+
+        photo.setPhotoId(photoId);
+        photo.updateReport(report);
+
+        photoRepository.save(photo);
+
+        acknowledgment.acknowledge();
+    }
 }

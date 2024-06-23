@@ -21,16 +21,16 @@ public class PhotoDto {
         private String nickname;
         private String profileImgUrl;
         private UUID photoId;
-        private String photoCloudfrontUrl;
+        private String photoImgUrl;
         private String exhibitionTitle;
         private String description;
         @Builder
-        public ReadBasicInfoResponse(UUID writerId, String nickname, String profileImgUrl, UUID photoId, String photoCloudfrontUrl, String exhibitionTitle, String description) {
+        public ReadBasicInfoResponse(UUID writerId, String nickname, String profileImgUrl, UUID photoId, String photoImgUrl, String exhibitionTitle, String description) {
             this.writerId = writerId;
             this.nickname = nickname == null ? "" : nickname;
             this.profileImgUrl = profileImgUrl == null ? "" : profileImgUrl;
             this.photoId = photoId;
-            this.photoCloudfrontUrl = photoCloudfrontUrl == null ? "" : photoCloudfrontUrl;
+            this.photoImgUrl = photoImgUrl == null ? "" : photoImgUrl;
             this.exhibitionTitle = exhibitionTitle == null ? "" : exhibitionTitle;
             this.description = description == null ? "" : description;
         }
@@ -47,6 +47,7 @@ public class PhotoDto {
         private LocalDateTime reportedAt;
         private String description;
         private UUID writerId;
+        private String photoImgUrl;
         private String nickname;
         private String profileImgUrl;
 
@@ -61,6 +62,7 @@ public class PhotoDto {
                 LocalDateTime reportedAt,
                 String description,
                 UUID writerId,
+                String photoImgUrl,
                 String nickname,
                 String profileImgUrl,
                 Long photoReportReceivedCount,
@@ -72,6 +74,7 @@ public class PhotoDto {
             this.reportedAt = reportedAt;
             this.description = description == null ? "" : description;
             this.writerId = writerId;
+            this.photoImgUrl = photoImgUrl == null ? "" : photoImgUrl;
             this.nickname = nickname == null ? "" : nickname;
             this.profileImgUrl = profileImgUrl == null ? "" : profileImgUrl;
 

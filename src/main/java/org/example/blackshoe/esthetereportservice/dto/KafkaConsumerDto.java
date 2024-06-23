@@ -8,9 +8,7 @@ import lombok.*;
 
 public class KafkaConsumerDto {
     @Data
-    @Builder
     @NoArgsConstructor
-    @AllArgsConstructor
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class CommentReport {
@@ -18,13 +16,22 @@ public class KafkaConsumerDto {
         private String writerId;
         private String reportType;
         private String reportDescription;
+
         private String commentId;
+        private String commentContent;
+        @Builder
+        public CommentReport(String reporterId, String writerId, String reportType, String reportDescription, String commentId, String commentContent) {
+            this.reporterId = reporterId;
+            this.writerId = writerId;
+            this.reportType = reportType;
+            this.reportDescription = reportDescription;
+            this.commentId = commentId;
+            this.commentContent = commentContent;
+        }
     }
 
     @Data
-    @Builder
     @NoArgsConstructor
-    @AllArgsConstructor
     @JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class PhotoReport {
@@ -33,6 +40,18 @@ public class KafkaConsumerDto {
         private String reportType;
         private String reportDescription;
         private String photoId;
+        private String photoImgUrl;
+        private String exhibitionTitle;
+        @Builder
+        public PhotoReport(String reporterId, String writerId, String reportType, String reportDescription, String photoId, String photoImgUrl, String exhibitionTitle) {
+            this.reporterId = reporterId;
+            this.writerId = writerId;
+            this.reportType = reportType;
+            this.reportDescription = reportDescription;
+            this.photoId = photoId;
+            this.photoImgUrl = photoImgUrl;
+            this.exhibitionTitle = exhibitionTitle;
+        }
     }
 
     @Getter

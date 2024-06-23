@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS photos (
                                       exhibition_title VARCHAR(50) NOT NULL,
     report_id BIGINT NOT NULL,
     photo_uuid BINARY(16) NOT NULL,
-    photo_cloudfront_url VARCHAR(500) NOT NULL,
+    photo_img_url VARCHAR(250) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (report_id) REFERENCES reports(report_id) ON DELETE CASCADE
     );

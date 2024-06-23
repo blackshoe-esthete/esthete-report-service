@@ -17,7 +17,7 @@ import java.util.UUID;
 public interface ReportRepository extends JpaRepository<Report, Long>{
 
     @Query("SELECT new org.example.blackshoe.esthetereportservice.dto.PhotoDto$ReadBasicInfoResponse" +
-            "(r.writerId, u.nickname, u.profileImgUrl, r.photo.photoId, r.photo.photoCloudfrontUrl, r.photo.exhibitionTitle, r.description) " +
+            "(r.writerId, u.nickname, u.profileImgUrl, r.photo.photoId, r.photo.photoImgUrl, r.photo.exhibitionTitle, r.description) " +
             "FROM Report r " +
             "LEFT JOIN User u ON r.writerId = u.userId " +
             "ORDER BY r.reportedAt DESC")
@@ -38,7 +38,7 @@ public interface ReportRepository extends JpaRepository<Report, Long>{
         ) {
  */
     @Query("SELECT new org.example.blackshoe.esthetereportservice.dto.PhotoDto$GetDetailInfoResponse" +
-            "(r.photo.exhibitionTitle, r.photo.photoId, r.photo.createdAt, r.reportedAt, r.description, r.writerId, u.nickname, u.profileImgUrl, " +
+            "(r.photo.exhibitionTitle, r.photo.photoId, r.photo.createdAt, r.reportedAt, r.description, r.writerId, r.photo.photoImgUrl, u.nickname, u.profileImgUrl, " +
             "(SELECT COUNT(pr) FROM Report pr WHERE pr.photo.photoId = :photoUUID), " +
             "u.reportReceivedCount" +
             ") " +
@@ -48,14 +48,15 @@ public interface ReportRepository extends JpaRepository<Report, Long>{
     PhotoDto.GetDetailInfoResponse getPhotoDetailByPhotoId(UUID photoUUID);
 
     @Query("SELECT new org.example.blackshoe.esthetereportservice.dto.CommentDto$ReadBasicInfo" +
-            "(r.writerId, u.nickname, u.profileImgUrl, r.description) " +
+            "(r.writerId, u.nickname, u.profileImgUrl, r.description, r.comment.content) " +
             "FROM Report r " +
             "LEFT JOIN User u ON r.writerId = u.userId " +
             "ORDER BY r.reportedAt ASC")
     Page<CommentDto.ReadBasicInfo> readComments(Pageable pageable);
 
     @Query("SELECT new org.example.blackshoe.esthetereportservice.dto.CommentDto$GetDetailInfo" +
-            "(r.comment.commentId, r.comment.createdAt, r.reportedAt, r.description, u.profileImgUrl, u.nickname, r.writerId, u.reportReceivedCount) " +
+            "(r.comment.commentId, r.comment.createdAt, r.reportedAt, r.description, " +
+            "u.profileImgUrl, u.nickname, r.writerId, u.reportReceivedCount, r.comment.content) " +
             "FROM Report r " +
             "LEFT JOIN User u ON r.writerId = u.userId " +
             "WHERE r.comment.commentId = :commentUUID " +
