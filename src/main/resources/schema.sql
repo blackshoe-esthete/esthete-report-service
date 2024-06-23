@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
                                      user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
                                      user_uuid BINARY(16) NOT NULL,
     nickname VARCHAR(50) NOT NULL,
-    profile_cloudfront_url VARCHAR(50) NOT NULL,
+    profile_img_url VARCHAR(250) NOT NULL,
     report_received_count BIGINT DEFAULT 0,
     report_made_count BIGINT DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

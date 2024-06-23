@@ -85,17 +85,17 @@ jobs:
             sudo docker run -d --name ${{ env.IMAGE_NAME }} \
                 -p 8050:8050 \
                 --network esthete-network \
-                -e DB_HOST='${{ secrets.DB_HOST }}' \
-                -e DB_PASSWORD='${{ secrets.DB_PASSWORD }}' \
-                -e DB_PORT='${{ secrets.DB_PORT }}' \
-                -e DB_USERNAME='${{ secrets.DB_USERNAME }}' \
-                -e INITIAL_DB='${{ secrets.INITIAL_DB }}' \
-                -e ADMIN_JWT_EXPIRATION='${{ secrets.ADMIN_JWT_EXPIRATION }}' \
-                -e ADMIN_JWT_SECRET='${{ secrets.ADMIN_JWT_SECRET }}' \
-                -e KAFKA_HOST='${{ secrets.KAFKA_HOST }}' \
-                -e KAFKA_PORT='${{ secrets.KAFKA_PORT }}' \
-                -e EUREKA_HOST='${{ secrets.EUREKA_HOST }}' \
-                -e INSTANCE_HOST='${{ secrets.HOST_TEST_DNS }}' \
+                -e DB_HOST=${{ secrets.DB_HOST }} \
+                -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+                -e DB_PORT=${{ secrets.DB_PORT }} \
+                -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
+                -e INITIAL_DB=${{ secrets.INITIAL_DB }} \
+                -e ADMIN_JWT_EXPIRATION=${{ secrets.ADMIN_JWT_EXPIRATION }} \
+                -e ADMIN_JWT_SECRET=${{ secrets.ADMIN_JWT_SECRET }} \
+                -e KAFKA_HOST=${{ secrets.KAFKA_HOST }} \
+                -e KAFKA_PORT=${{ secrets.KAFKA_PORT }} \
+                -e EUREKA_HOST=${{ secrets.EUREKA_HOST }} \
+                -e INSTANCE_HOST=${{ secrets.HOST_TEST_DNS }} \
                 ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_REPORT_VER }}
             sleep 15
             sudo docker image prune -af || true

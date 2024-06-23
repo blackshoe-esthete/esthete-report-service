@@ -16,5 +16,5 @@ public interface PhotoService {
 
     @PreAuthorize("isAuthenticated()")
     @Transactional
-    void deletePhotoReport(String photoId);
+    void deletePhoto(String photoId);
 }

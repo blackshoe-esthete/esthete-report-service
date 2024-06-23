@@ -4,9 +4,11 @@ import jakarta.persistence.PrePersist;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.blackshoe.esthetereportservice.dto.CommentDto;
+import org.example.blackshoe.esthetereportservice.dto.KafkaProducerDto;
 import org.example.blackshoe.esthetereportservice.entity.Comment;
 import org.example.blackshoe.esthetereportservice.repository.CommentRepository;
 import org.example.blackshoe.esthetereportservice.repository.ReportRepository;
+import org.example.blackshoe.esthetereportservice.service.kafka.KafkaRemoveProducer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,7 @@ public class CommentServiceImpl implements CommentService{
 
     private final ReportRepository reportRepository;
     private final CommentRepository commentRepository;
+    private final KafkaRemoveProducer kafkaRemoveProducer;
     @Override
     public Page<CommentDto.ReadBasicInfo> readComments(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -55,5 +58,11 @@ public class CommentServiceImpl implements CommentService{
         reportRepository.deleteByCommentId(commentUUID);
         commentRepository.deleteByCommentId(commentUUID);
         //@TODO : kafka event publish
+
+        KafkaProducerDto.DeleteComment deleteComment = KafkaProducerDto.DeleteComment.builder()
+                .commentId(commentId)
+                .build();
+
+        kafkaRemoveProducer.deleteComment(deleteComment);
     }
 }

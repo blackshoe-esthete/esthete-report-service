@@ -2,7 +2,7 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- 디폴트 유저 삽입
-INSERT INTO users (user_id, user_uuid, nickname, created_at, profile_cloudfront_url, report_received_count) VALUES
+INSERT INTO users (user_id, user_uuid, nickname, created_at, profile_img_url, report_received_count) VALUES
  (1, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')), 'test_user', NOW(), '프로필 url', 2),
  (2, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), 'test_user2', NOW(), '프로필 url', 1),
  (3, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), 'test_user3', NOW(), '프로필 url', 1),

@@ -18,13 +18,13 @@ public class CommentDto {
     public static class ReadBasicInfo {
         private UUID writerId;
         private String nickname;
-        private String profileCloudfrontUrl;
+        private String profileImgUrl;
         private String description;
         @Builder
-        public ReadBasicInfo(UUID writerId, String nickname, String profileCloudfrontUrl, String description) {
+        public ReadBasicInfo(UUID writerId, String nickname, String profileImgUrl, String description) {
             this.writerId = writerId;
             this.nickname = nickname == null ? "" : nickname;
-            this.profileCloudfrontUrl = profileCloudfrontUrl == null ? "" : profileCloudfrontUrl;
+            this.profileImgUrl = profileImgUrl == null ? "" : profileImgUrl;
             this.description = description == null ? "" : description;
         }
     }
@@ -38,7 +38,7 @@ public class CommentDto {
         private LocalDateTime createdAt;
         private LocalDateTime reportedAt;
         private String description;
-        private String profileCloudfrontUrl;
+        private String profileImgUrl;
         private String nickname;
         private UUID writerId;
 
@@ -50,7 +50,7 @@ public class CommentDto {
                 LocalDateTime createdAt,
                 LocalDateTime reportedAt,
                 String description,
-                String profileCloudfrontUrl,
+                String profileImgUrl,
                 String nickname,
                 UUID writerId,
 
@@ -60,7 +60,7 @@ public class CommentDto {
             this.createdAt = createdAt;
             this.reportedAt = reportedAt;
             this.description = description;
-            this.profileCloudfrontUrl = profileCloudfrontUrl;
+            this.profileImgUrl = profileImgUrl;
             this.nickname = nickname;
             this.writerId = writerId;
 

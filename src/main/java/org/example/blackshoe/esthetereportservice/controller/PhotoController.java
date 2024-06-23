@@ -43,8 +43,14 @@ public class PhotoController {
     }
     @Operation(summary = "사진 삭제")
     @DeleteMapping("/{photoId}")
-    public void deletePhoto() {
-        log.info("deleteComment");
+    public ResponseEntity<ResponseDto> deletePhoto(
+            @PathVariable String photoId
+    ) {
+        log.info("deletePhoto");
+
+        photoService.deletePhoto(photoId);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
     @Operation(summary = "사진 삭제 요청 반려")
     @DeleteMapping("/{photoId}/reject")

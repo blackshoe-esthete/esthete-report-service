@@ -2,9 +2,11 @@ package org.example.blackshoe.esthetereportservice.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.blackshoe.esthetereportservice.dto.KafkaProducerDto;
 import org.example.blackshoe.esthetereportservice.dto.PhotoDto;
 import org.example.blackshoe.esthetereportservice.repository.PhotoRepository;
 import org.example.blackshoe.esthetereportservice.repository.ReportRepository;
+import org.example.blackshoe.esthetereportservice.service.kafka.KafkaRemoveProducer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +21,7 @@ import java.util.UUID;
 public class PhotoServiceImpl implements PhotoService {
     private final PhotoRepository photoRepository;
     private final ReportRepository reportRepository;
-
+    private final KafkaRemoveProducer kafkaRemoveProducer;
     @Override
     public Page<PhotoDto.ReadBasicInfoResponse> readPhotos(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
@@ -48,9 +50,16 @@ public class PhotoServiceImpl implements PhotoService {
     @PreAuthorize("isAuthenticated()")
     @Transactional
     @Override
-    public void deletePhotoReport(String photoId) {
+    public void deletePhoto(String photoId) {
         UUID photoUUID = UUID.fromString(photoId);
         reportRepository.deleteByPhotoId(photoUUID);
         photoRepository.deleteByPhotoId(photoUUID);
+
+        KafkaProducerDto.DeletePhoto deletePhoto = KafkaProducerDto.DeletePhoto.builder()
+                .photoId(photoId)
+                .build();
+
+        kafkaRemoveProducer.deletePhoto(deletePhoto);
+
     }
 }

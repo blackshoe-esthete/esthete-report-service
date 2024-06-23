@@ -19,16 +19,16 @@ public class PhotoDto {
     public static class ReadBasicInfoResponse {
         private UUID writerId;
         private String nickname;
-        private String profileCloudfrontUrl;
+        private String profileImgUrl;
         private UUID photoId;
         private String photoCloudfrontUrl;
         private String exhibitionTitle;
         private String description;
         @Builder
-        public ReadBasicInfoResponse(UUID writerId, String nickname, String profileCloudfrontUrl, UUID photoId, String photoCloudfrontUrl, String exhibitionTitle, String description) {
+        public ReadBasicInfoResponse(UUID writerId, String nickname, String profileImgUrl, UUID photoId, String photoCloudfrontUrl, String exhibitionTitle, String description) {
             this.writerId = writerId;
             this.nickname = nickname == null ? "" : nickname;
-            this.profileCloudfrontUrl = profileCloudfrontUrl == null ? "" : profileCloudfrontUrl;
+            this.profileImgUrl = profileImgUrl == null ? "" : profileImgUrl;
             this.photoId = photoId;
             this.photoCloudfrontUrl = photoCloudfrontUrl == null ? "" : photoCloudfrontUrl;
             this.exhibitionTitle = exhibitionTitle == null ? "" : exhibitionTitle;
@@ -48,7 +48,7 @@ public class PhotoDto {
         private String description;
         private UUID writerId;
         private String nickname;
-        private String profileCloudfrontUrl;
+        private String profileImgUrl;
 
         private Long photoReportReceivedCount;
         private Long userReportReceivedCount;
@@ -62,7 +62,7 @@ public class PhotoDto {
                 String description,
                 UUID writerId,
                 String nickname,
-                String profileCloudfrontUrl,
+                String profileImgUrl,
                 Long photoReportReceivedCount,
                 Long userReportReceivedCount
         ) {
@@ -73,7 +73,7 @@ public class PhotoDto {
             this.description = description == null ? "" : description;
             this.writerId = writerId;
             this.nickname = nickname == null ? "" : nickname;
-            this.profileCloudfrontUrl = profileCloudfrontUrl == null ? "" : profileCloudfrontUrl;
+            this.profileImgUrl = profileImgUrl == null ? "" : profileImgUrl;
 
             this.photoReportReceivedCount = photoReportReceivedCount == null ? 0 : photoReportReceivedCount;
             this.userReportReceivedCount = userReportReceivedCount == null ? 0 : userReportReceivedCount;

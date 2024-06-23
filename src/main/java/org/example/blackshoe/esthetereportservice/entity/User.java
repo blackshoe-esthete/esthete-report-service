@@ -25,8 +25,8 @@ public class User extends BaseEntity {
     @Column(name = "nickname", nullable = false, length = 50)
     private String nickname;
 
-    @Column(name = "profile_cloudfront_url", nullable = false, length = 50)
-    private String profileCloudfrontUrl;
+    @Column(name = "profile_img_url", nullable = false, columnDefinition = "VARCHAR(250) default 'default'")
+    private String profileImgUrl;
 
     @Column(name = "report_received_count", nullable = false, columnDefinition = "BIGINT default 0")
     private Long reportReceivedCount;
@@ -46,9 +46,13 @@ public class User extends BaseEntity {
         this.userId = userId;
     }
 
+    public void updateProfileImgUrl(String profileImgUrl) {
+        this.profileImgUrl = profileImgUrl;
+    }
+
     @Builder
-    public User(String nickname, String profileCloudfrontUrl) {
+    public User(String nickname, String profileImgUrl) {
         this.nickname = nickname;
-        this.profileCloudfrontUrl = profileCloudfrontUrl;
+        this.profileImgUrl = profileImgUrl;
     }
 }
