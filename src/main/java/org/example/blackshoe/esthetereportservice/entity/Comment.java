@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Getter
-@Table(name = "comment")
+@Table(name = "comments")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment extends BaseEntity {
     @Id

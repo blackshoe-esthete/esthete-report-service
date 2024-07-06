@@ -134,33 +134,33 @@ public class KafkaUserInfoConsumer{
 
         acknowledgment.acknowledge();
     }
-    @KafkaListener(topics = "user-delete")
-    @Transactional
-    public void deleteUser(String payload) {
-        log.info("received payload='{}'", payload);
-        KafkaConsumerDto.UserDelete userNicknameDto = null;
-
-        try {
-            // 역직렬화
-            userNicknameDto = objectMapper.readValue(payload, KafkaConsumerDto.UserDelete.class);
-        } catch (Exception e) {
-            log.error("Error while converting json string to user object", e);
-        }
-
-        log.info("User info : {}", userNicknameDto);
-
-        UUID userId = UUID.fromString(userNicknameDto.getUserId());
-        final User user = userRepository.findByUserId(userId).orElseThrow(() -> new KafkaException(KafkaErrorResult.USER_NOT_FOUND));
-
-        userRepository.delete(user);
-
-        final List<Report> reports = reportRepository.findByWriterId(userId);
-
-        for (Report report : reports) {
-            photoRepository.deleteByPhotoId(report.getPhoto().getPhotoId());
-        }
-
-        reportRepository.deleteByWriterId(userId);
-
-    }
+//    @KafkaListener(topics = "user-delete")
+//    @Transactional
+//    public void deleteUser(String payload) {
+//        log.info("received payload='{}'", payload);
+//        KafkaConsumerDto.UserDelete userNicknameDto = null;
+//
+//        try {
+//            // 역직렬화
+//            userNicknameDto = objectMapper.readValue(payload, KafkaConsumerDto.UserDelete.class);
+//        } catch (Exception e) {
+//            log.error("Error while converting json string to user object", e);
+//        }
+//
+//        log.info("User info : {}", userNicknameDto);
+//
+//        UUID userId = UUID.fromString(userNicknameDto.getUserId());
+//        final User user = userRepository.findByUserId(userId).orElseThrow(() -> new KafkaException(KafkaErrorResult.USER_NOT_FOUND));
+//
+//        userRepository.delete(user);
+//
+//        final List<Report> reports = reportRepository.findByWriterId(userId);
+//
+//        for (Report report : reports) {
+//            photoRepository.deleteByPhotoId(report.getPhoto().getPhotoId());
+//        }
+//
+//        reportRepository.deleteByWriterId(userId);
+//
+//    }
 }

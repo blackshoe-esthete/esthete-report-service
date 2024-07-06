@@ -22,8 +22,8 @@ public class CommentController {
     @Operation(summary = "댓글 페이징 조회")
     @GetMapping
     public ResponseEntity<Page<CommentDto.ReadBasicInfo>> readComment(
-            int page,
-            int size
+            @RequestParam(defaultValue = "0") int page,//default
+            @RequestParam(defaultValue = "10") int size
     ) {
         log.info("read comments");
         Page<CommentDto.ReadBasicInfo> comments = commentService.readComments(page, size);
