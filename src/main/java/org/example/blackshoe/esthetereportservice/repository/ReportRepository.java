@@ -49,7 +49,7 @@ public interface ReportRepository extends JpaRepository<Report, Long>{
     PhotoDto.GetDetailInfoResponse getPhotoDetailByPhotoId(UUID photoUUID);
 
     @Query("SELECT new org.example.blackshoe.esthetereportservice.dto.CommentDto$ReadBasicInfo" +
-            "(r.writerId, u.nickname, u.profileImgUrl, r.description, r.comment.content) " +
+            "(r.writerId, u.nickname, u.profileImgUrl, r.description, r.comment.content, r.comment.commentId) " +
             "FROM Report r " +
             "LEFT JOIN User u ON r.writerId = u.userId " +
             "ORDER BY r.reportedAt ASC")

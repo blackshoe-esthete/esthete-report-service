@@ -40,5 +40,41 @@ INSERT INTO admins (admin_id, admin_uuid, email, password, created_at, role) VAL
  (1, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')), 'test@admin.com', '$2a$10$hCdKEg9dbBkWoEIqWgG0DuOrxuuQEYHpXmxoA16dJK6WaDsdKpz7K', NOW(),
  'ADMIN')
 ON DUPLICATE KEY UPDATE admin_id = admin_id;
+/*
+     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_id")
+    private Long id;
+
+    @Column(name = "comment_uuid", columnDefinition = "BINARY(16)", unique = true, nullable = false)
+    private UUID commentId;
+
+    @Column(name = "content", nullable = false, length = 50)
+    private String content;
+
+    public void setCommentId(UUID commentId) {
+        this.commentId = commentId;
+    }
+
+    public void updateReport(Report report) {
+        this.report = report;
+        report.setComment(this);
+    }
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "report_id", foreignKey = @ForeignKey(name = "comments_fk_report_id"))
+    private Report report;
+ */
+INSERT IGNORE INTO comments (comment_id, comment_uuid, content, report_id)
+VALUES
+    (1, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')), 'test_comment', 9);
+
+INSERT IGNORE INTO reports (report_id, reporter_uuid, writer_uuid, description, type, reported_at)
+VALUES
+    (9, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')),
+     UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')),
+     'test_description', '도배성 댓글', NOW());
+
+
 
 SET FOREIGN_KEY_CHECKS = 1;

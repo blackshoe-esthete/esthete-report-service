@@ -21,13 +21,15 @@ public class CommentDto {
         private String profileImgUrl;
         private String description;
         private String commentContent;
+        private UUID commentId;
         @Builder
-        public ReadBasicInfo(UUID writerId, String nickname, String profileImgUrl, String description, String commentContent) {
+        public ReadBasicInfo(UUID writerId, String nickname, String profileImgUrl, String description, String commentContent, UUID commentId) {
             this.writerId = writerId;
             this.nickname = nickname == null ? "" : nickname;
             this.profileImgUrl = profileImgUrl == null ? "" : profileImgUrl;
             this.description = description == null ? "" : description;
             this.commentContent = commentContent == null ? "" : commentContent;
+            this.commentId = commentId;
         }
     }
 
