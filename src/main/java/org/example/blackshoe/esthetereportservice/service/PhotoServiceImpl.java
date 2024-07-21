@@ -43,6 +43,7 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     public void rejectPhotoReport(String photoId) {
         UUID photoUUID = UUID.fromString(photoId);
+
         reportRepository.deleteByPhotoId(photoUUID);
         photoRepository.deleteByPhotoId(photoUUID);
     }

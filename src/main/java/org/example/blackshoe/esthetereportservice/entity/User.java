@@ -6,7 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.blackshoe.esthetereportservice.common.BaseEntity;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -25,7 +27,7 @@ public class User extends BaseEntity {
     @Column(name = "nickname", nullable = false, length = 50)
     private String nickname;
 
-    @Column(name = "profile_img_url", nullable = false, columnDefinition = "VARCHAR(250) default 'default'")
+    @Column(name = "profile_img_url", columnDefinition = "VARCHAR(250) default 'default'")
     private String profileImgUrl;
 
     @Column(name = "report_received_count", nullable = false, columnDefinition = "BIGINT default 0")
@@ -33,6 +35,10 @@ public class User extends BaseEntity {
 
     @Column(name = "report_made_count", nullable = false, columnDefinition = "BIGINT default 0")
     private Long reportMadeCount;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, length = 20)
+    private LocalDateTime createdAt;
 
     public void increaseReportReceivedCount() {
         this.reportReceivedCount++;
@@ -51,9 +57,12 @@ public class User extends BaseEntity {
     }
 
     @Builder
-    public User(String nickname, String profileImgUrl) {
+    public User(String nickname, String profileImgUrl, Long reportReceivedCount, Long reportMadeCount, LocalDateTime createdAt) {
         this.nickname = nickname;
         this.profileImgUrl = profileImgUrl;
+        this.reportReceivedCount = reportReceivedCount;
+        this.reportMadeCount = reportMadeCount;
+        this.createdAt = createdAt;
     }
 
     public void updateNickname(String nickname) {
