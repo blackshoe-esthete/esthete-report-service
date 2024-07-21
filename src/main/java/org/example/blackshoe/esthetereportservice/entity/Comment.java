@@ -34,7 +34,7 @@ public class Comment extends BaseEntity {
         report.setComment(this);
     }
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "report_id", foreignKey = @ForeignKey(name = "comments_fk_report_id"))
     private Report report;
 

@@ -49,18 +49,15 @@ public class KafkaReportConsumer {
                 .type(commentReport.getReportType())
                 .build();
 
-        reportRepository.save(report);
-
         Comment comment = Comment.builder()
                 .content(commentReport.getCommentContent())
                 .build();
 
         UUID commentId = UUID.fromString(commentReport.getCommentId());
-
         comment.setCommentId(commentId);
         comment.updateReport(report);
 
-        commentRepository.save(comment);
+        reportRepository.save(report);
 
         acknowledgment.acknowledge();
     }
@@ -91,8 +88,6 @@ public class KafkaReportConsumer {
                 .type(photoReport.getReportType())
                 .build();
 
-        reportRepository.save(report);
-
         UUID photoId = UUID.fromString(photoReport.getPhotoId());
 
         Photo photo = Photo.builder()
@@ -102,8 +97,8 @@ public class KafkaReportConsumer {
 
         photo.setPhotoId(photoId);
         photo.updateReport(report);
+        reportRepository.save(report);
 
-        photoRepository.save(photo);
 
         acknowledgment.acknowledge();
     }
