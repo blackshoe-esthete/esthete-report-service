@@ -3,11 +3,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- 디폴트 유저 삽입
 INSERT INTO users (user_id, user_uuid, nickname, created_at, profile_img_url, report_received_count) VALUES
-                                                                                                         (1, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), 'test_user', NOW(), '프로필 url', 3),
-                                                                                                         (2, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), 'test_user2', NOW(), '프로필 url', 4),
-                                                                                                         (3, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), 'test_user3', NOW(), '프로필 url', 2),
-                                                                                                         (4, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), 'test_user4', NOW(), '프로필 url', 4),
-                                                                                                         (5, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), 'test_user5', NOW(), '프로필 url', 3)
+                                 (1, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), 'test_user', NOW(), '프로필 url', 3),
+                                 (2, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), 'test_user2', NOW(), '프로필 url', 4),
+                                 (3, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), 'test_user3', NOW(), '프로필 url', 2),
+                                 (4, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), 'test_user4', NOW(), '프로필 url', 4),
+                                 (5, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), 'test_user5', NOW(), '프로필 url', 3)
     ON DUPLICATE KEY UPDATE report_received_count = VALUES(report_received_count);
 
 
@@ -59,16 +59,15 @@ VALUES
 -- 추가 댓글 데이터
 INSERT INTO comments (comment_id, comment_uuid, content, report_id)
 VALUES
-    (2, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), '이 멍청한 XX는 뭘 모르네', 10),
-    (3, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), '여기서 우리 회사 제품 사세요! 특가 할인 중!', 11),
-    (4, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), '너같은 놈은 살 가치가 없어', 12),
-    (5, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), '관심 좀 주세요 관심 좀 주세요 관심 좀 주세요', 13),
-    (6, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), '19금 내용은 비밀 댓글로 보내드립니다', 14),
-    (7, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), '백신을 맞으면 외계인으로 변합니다', 15),
-    (8, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), '이 글은 제가 쓴 책에서 그대로 베낀 거예요', 16),
-    (9, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), '마약 구매하는 방법 알려드립니다', 17),
-    (10, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), '특정 정당 지지자들은 다 멍청이들이야!', 18)
+    (2, UNHEX(REPLACE('a1b2c3d4-e5f6-4a5b-9c8d-1e2f3a4b5c6d', '-', '')), '이 멍청한 XX는 뭘 모르네', 10),
+    (3, UNHEX(REPLACE('b2c3d4e5-f6a7-5b6c-0d1e-2f3a4b5c6d7e', '-', '')), '여기서 우리 회사 제품 사세요! 특가 할인 중!', 11),
+    (4, UNHEX(REPLACE('c3d4e5f6-a7b8-6c7d-1e2f-3a4b5c6d7e8f', '-', '')), '너같은 놈은 살 가치가 없어', 12),
+    (5, UNHEX(REPLACE('d4e5f6a7-b8c9-7d8e-2f3a-4b5c6d7e8f9a', '-', '')), '관심 좀 주세요 관심 좀 주세요 관심 좀 주세요', 13),
+    (6, UNHEX(REPLACE('e5f6a7b8-c9d0-8e9f-3a4b-5c6d7e8f9a0b', '-', '')), '19금 내용은 비밀 댓글로 보내드립니다', 14),
+    (7, UNHEX(REPLACE('f6a7b8c9-d0e1-9f0a-4b5c-6d7e8f9a0b1c', '-', '')), '백신을 맞으면 외계인으로 변합니다', 15),
+    (8, UNHEX(REPLACE('a7b8c9d0-e1f2-0a1b-5c6d-7e8f9a0b1c2d', '-', '')), '이 글은 제가 쓴 책에서 그대로 베낀 거예요', 16),
+    (9, UNHEX(REPLACE('b8c9d0e1-f2a3-1b2c-6d7e-8f9a0b1c2d3e', '-', '')), '마약 구매하는 방법 알려드립니다', 17),
+    (10, UNHEX(REPLACE('c9d0e1f2-a3b4-2c3d-7e8f-9a0b1c2d3e4f', '-', '')), '특정 정당 지지자들은 다 멍청이들이야!', 18)
     ON DUPLICATE KEY UPDATE comment_id = comment_id;
-
 
 SET FOREIGN_KEY_CHECKS = 1;
