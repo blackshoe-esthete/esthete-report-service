@@ -3,7 +3,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- 디폴트 유저 삽입
 INSERT INTO users (user_id, user_uuid, nickname, created_at, profile_img_url, report_received_count) VALUES
- (1, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')), 'test_user', NOW(), '프로필 url', 2),
+ (1, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), 'test_user', NOW(), '프로필 url', 2),
  (2, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), 'test_user2', NOW(), '프로필 url', 1),
  (3, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), 'test_user3', NOW(), '프로필 url', 1),
  (4, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), 'test_user4', NOW(), '프로필 url', 2),
@@ -40,40 +40,18 @@ INSERT INTO admins (admin_id, admin_uuid, email, password, created_at, role) VAL
  (1, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')), 'test@admin.com', '$2a$10$hCdKEg9dbBkWoEIqWgG0DuOrxuuQEYHpXmxoA16dJK6WaDsdKpz7K', NOW(),
  'ADMIN')
 ON DUPLICATE KEY UPDATE admin_id = admin_id;
-/*
-     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
-    private Long id;
 
-    @Column(name = "comment_uuid", columnDefinition = "BINARY(16)", unique = true, nullable = false)
-    private UUID commentId;
-
-    @Column(name = "content", nullable = false, length = 50)
-    private String content;
-
-    public void setCommentId(UUID commentId) {
-        this.commentId = commentId;
-    }
-
-    public void updateReport(Report report) {
-        this.report = report;
-        report.setComment(this);
-    }
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "report_id", foreignKey = @ForeignKey(name = "comments_fk_report_id"))
-    private Report report;
- */
-INSERT IGNORE INTO comments (comment_id, comment_uuid, content, report_id)
+INSERT INTO comments (comment_id, comment_uuid, content, report_id)
 VALUES
-    (1, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')), 'test_comment', 9);
+    (1, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')), 'test_comment', 9)
+ON DUPLICATE KEY UPDATE comment_id = comment_id;
 
-INSERT IGNORE INTO reports (report_id, reporter_uuid, writer_uuid, description, type, reported_at)
+INSERT INTO reports (report_id, reporter_uuid, writer_uuid, description, type, reported_at)
 VALUES
     (9, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')),
      UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')),
-     'test_description', '도배성 댓글', NOW());
+     'test_description', '도배성 댓글', NOW())
+ON DUPLICATE KEY UPDATE report_id = report_id;
 
 
 
