@@ -3,12 +3,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- 디폴트 유저 삽입
 INSERT INTO users (user_id, user_uuid, nickname, created_at, profile_img_url, report_received_count) VALUES
- (1, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), 'test_user', NOW(), '프로필 url', 2),
- (2, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), 'test_user2', NOW(), '프로필 url', 1),
- (3, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), 'test_user3', NOW(), '프로필 url', 1),
- (4, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), 'test_user4', NOW(), '프로필 url', 2),
- (5, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), 'test_user5', NOW(), '프로필 url', 1)
-ON DUPLICATE KEY UPDATE user_uuid = user_uuid;
+                                                                                                         (1, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), 'test_user', NOW(), '프로필 url', 3),
+                                                                                                         (2, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), 'test_user2', NOW(), '프로필 url', 4),
+                                                                                                         (3, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), 'test_user3', NOW(), '프로필 url', 2),
+                                                                                                         (4, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), 'test_user4', NOW(), '프로필 url', 4),
+                                                                                                         (5, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), 'test_user5', NOW(), '프로필 url', 3)
+    ON DUPLICATE KEY UPDATE report_received_count = VALUES(report_received_count);
+
 
 
 INSERT INTO reports (report_id, reporter_uuid, writer_uuid, description, type, reported_at)
@@ -41,18 +42,33 @@ INSERT INTO admins (admin_id, admin_uuid, email, password, created_at, role) VAL
  'ADMIN')
 ON DUPLICATE KEY UPDATE admin_id = admin_id;
 
-INSERT INTO comments (comment_id, comment_uuid, content, report_id)
-VALUES
-    (1, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')), 'test_comment', 9)
-ON DUPLICATE KEY UPDATE comment_id = comment_id;
-
+-- 추가 신고 데이터
 INSERT INTO reports (report_id, reporter_uuid, writer_uuid, description, type, reported_at)
 VALUES
-    (9, UNHEX(REPLACE('23e7b2b4-c1ac-4591-bb7f-c6706daf22aa', '-', '')),
-     UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')),
-     'test_description', '도배성 댓글', NOW())
-ON DUPLICATE KEY UPDATE report_id = report_id;
+    (10, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), '욕설이 포함된 댓글', '부적절한 언어', NOW()),
+    (11, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), '광고성 댓글', '스팸', NOW()),
+    (12, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), '타인을 비방하는 내용', '괴롭힘', NOW()),
+    (13, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), '반복적인 도배 댓글', '도배성 댓글', NOW()),
+    (14, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), '음란한 내용의 댓글', '음란물', NOW()),
+    (15, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), '허위 정보 유포', '허위 정보', NOW()),
+    (16, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), '저작권 침해 의심 댓글', '저작권 침해', NOW()),
+    (17, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), '불법 행위 조장 댓글', '불법 행위', NOW()),
+    (18, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), '정치적 갈등 유발 댓글', '혐오 발언', NOW())
+    ON DUPLICATE KEY UPDATE report_id = report_id;
 
+-- 추가 댓글 데이터
+INSERT INTO comments (comment_id, comment_uuid, content, report_id)
+VALUES
+    (2, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), '이 멍청한 XX는 뭘 모르네', 10),
+    (3, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), '여기서 우리 회사 제품 사세요! 특가 할인 중!', 11),
+    (4, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), '너같은 놈은 살 가치가 없어', 12),
+    (5, UNHEX(REPLACE('4b55df30-7a87-49b2-bd56-e0f5210a9a5d', '-', '')), '관심 좀 주세요 관심 좀 주세요 관심 좀 주세요', 13),
+    (6, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), '19금 내용은 비밀 댓글로 보내드립니다', 14),
+    (7, UNHEX(REPLACE('550e8400-e29b-41d4-a716-446655440000', '-', '')), '백신을 맞으면 외계인으로 변합니다', 15),
+    (8, UNHEX(REPLACE('86a93e29-0f46-4a65-9c49-7fbf7c13e9f2', '-', '')), '이 글은 제가 쓴 책에서 그대로 베낀 거예요', 16),
+    (9, UNHEX(REPLACE('4d4be043-5d57-45eb-a3fb-dc48e5e452b0', '-', '')), '마약 구매하는 방법 알려드립니다', 17),
+    (10, UNHEX(REPLACE('65b87d26-9482-4984-843a-bee6efb3d9cd', '-', '')), '특정 정당 지지자들은 다 멍청이들이야!', 18)
+    ON DUPLICATE KEY UPDATE comment_id = comment_id;
 
 
 SET FOREIGN_KEY_CHECKS = 1;
